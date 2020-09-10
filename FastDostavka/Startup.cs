@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FastDostavka.Data;
+using FastDostavka.Data.Seed;
 using FastDostavka.Services;
 using JobJoin.Data.Entities.IdentityUser;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -141,6 +142,8 @@ namespace FastDostavka
             {
                 endpoints.MapControllers();
             });
+            SeedData.Seed(app.ApplicationServices, env, this.Configuration);
+
         }
     }
 }
