@@ -10,6 +10,8 @@ namespace FastDostavka.Data.Seed.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
+        public string City { get; set; }
+
         public string Image { get; set; }
         public int Age { get; set; }
         public DateTime RegisterDate { get; set; }
