@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JobJoin.Data.Entities.IdentityUser
+namespace FastDostavka.Data.Entities.IdentityUser
 {
     public class DbUserRole:IdentityUserRole<string>
     {

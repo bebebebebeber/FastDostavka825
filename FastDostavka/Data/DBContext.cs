@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using JobJoin.Data.Entities.IdentityUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using FastDostavka.Data.Entities;
 using FastDostavka.Data.Configurations;
+using FastDostavka.Data.Entities.IdentityUser;
 
 namespace FastDostavka.Data
 {
@@ -27,6 +27,9 @@ namespace FastDostavka.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new UserProfileConfiguration());
+            modelBuilder.ApplyConfiguration(new DbUserConfiguration());
+            modelBuilder.ApplyConfiguration(new DbUserRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new DbRoleConfiguration());
         }
     }
 }

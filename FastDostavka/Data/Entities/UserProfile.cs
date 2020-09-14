@@ -1,4 +1,4 @@
-﻿using JobJoin.Data.Entities.IdentityUser;
+﻿using FastDostavka.Data.Entities.IdentityUser;
 using System;
 using System.Collections.Generic;
 using System.Linq;

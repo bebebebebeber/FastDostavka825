@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FastDostavka.Data;
+using FastDostavka.Data.Entities;
+using FastDostavka.Data.Entities.IdentityUser;
 using FastDostavka.Services;
 using FastDostavka.ViewModels;
-using JobJoin.Data.Entities.IdentityUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -75,7 +76,6 @@ namespace FastDostavka.Controllers.UserControllers
             {
                 return BadRequest("Error");
             }
-
         }
     }
 }

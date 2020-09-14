@@ -1,4 +1,4 @@
-﻿using JobJoin.Data.Entities.IdentityUser;
+﻿using FastDostavka.Data.Entities.IdentityUser;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using FastDostavka.Data.Entities;
+using FastDostavka.Data.Entities.IdentityUser;
 using FastDostavka.Data.Seed.Models;
-using JobJoin.Data.Entities.IdentityUser;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
-namespace JobJoin.Data.Entities.IdentityUser
+namespace FastDostavka.Data.Entities.IdentityUser
 {
     public class DbRole:IdentityRole<string>
     {

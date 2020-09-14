@@ -1,5 +1,5 @@
 ﻿using FastDostavka.Data;
-using JobJoin.Data.Entities.IdentityUser;
+using FastDostavka.Data.Entities.IdentityUser;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
