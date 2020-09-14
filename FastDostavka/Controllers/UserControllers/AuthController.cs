@@ -44,11 +44,38 @@ namespace FastDostavka.Controllers.UserControllers
                 return BadRequest("Не правильний пароль!");
             }
             await _signInManager.SignInAsync(user, isPersistent: false);
-            //var refreshToken = _jwtTokenService.GenerateRefreshToken();
+            var refreshToken = _jwtTokenService.GenerateRefreshToken();
             user.UserProfile.LastLogined = DateTime.Now;
+            user.UserProfile.RefreshToken = refreshToken;
             _context.SaveChanges();
 
-            return Ok(new { token = _jwtTokenService.CreateToken(user)});
+            return Ok(new { token = _jwtTokenService.CreateToken(user), refreshToken = refreshToken });
+        }
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] TokensModel model)
+        {
+            try
+            {
+                var principal = _jwtTokenService.GetPrincipalFromExpiredToken(model.Token);
+                var username = principal.Identity.Name;
+                var up = _context.UserProfiles.FirstOrDefault(x => x.DbUser.UserName == username);
+                var savedRefreshToken = up.RefreshToken; //retrieve the refresh token from a data store
+                if (savedRefreshToken != model.RefreshToken)
+                {
+                    return BadRequest("Bad data");
+                }
+                var claims = principal.Claims.ToList();
+                var newJwtToken = _jwtTokenService.GenerateToken(claims);
+                var newRefreshToken = _jwtTokenService.GenerateRefreshToken();
+                up.RefreshToken = newRefreshToken;
+                await _context.SaveChangesAsync();
+                return Ok(new { token = newJwtToken, refreshToken = newRefreshToken });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error");
+            }
+
         }
     }
 }

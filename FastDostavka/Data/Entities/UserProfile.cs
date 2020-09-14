@@ -13,6 +13,7 @@ namespace FastDostavka.Data.Entities
         public string LastName { get; set; }
         public string City { get; set; }
         public string Image { get; set; }
+        public string RefreshToken { get; set; }
         public int? Age { get; set; }
         public string Address { get; set; }
         public DateTime RegisterDate { get; set; }
