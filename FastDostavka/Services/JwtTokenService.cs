@@ -57,7 +57,7 @@ namespace FastDostavka.Services
                 claims.Add(new Claim("roles", el));
             }
             //var now = DateTime.UtcNow;
-            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("c672421d-af28-445b-b68a-01a2040ab899"));
+            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("SecretPhrase")));
             var signinCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256);
 
             var jwt = new JwtSecurityToken(
@@ -85,7 +85,7 @@ namespace FastDostavka.Services
                     c.Add(el);
                 }
             }
-            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("c672421d-af28-445b-b68a-01a2040ab899"));
+            var signinKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("SecretPhrase")));
             var signinCredentials = new SigningCredentials(signinKey, SecurityAlgorithms.HmacSha256);
 
             var jwt = new JwtSecurityToken(
@@ -113,7 +113,7 @@ namespace FastDostavka.Services
                 ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("c672421d-af28-445b-b68a-01a2040ab899")),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("SecretPhrase"))),
                 ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
             };
 
