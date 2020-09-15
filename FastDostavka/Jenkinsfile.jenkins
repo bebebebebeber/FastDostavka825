@@ -11,7 +11,15 @@ pipeline  {
         timestamps()
     }
     stages {
+        stage("Stop service") {
+            steps {
+                echo 'Stop process ...'
+                dir('.'){
+                  sh "sudo systemctl stop fast"
 
+                }
+            }
+        }
 		stage("publish") {
             steps {
                 echo 'publish ..'
@@ -21,20 +29,11 @@ pipeline  {
                 }
             }
         }
-        stage("cd") {
+        stage("start service") {
             steps {
-                 echo 'cd ..'
+                 echo 'starting ..'
                  dir('.'){
-                      sh "cd /FastDostavka/bin/Release/netcoreapp3.1/publish/"
-
-                 }
-            }
-        }
-        stage("start") {
-            steps {
-                 echo 'Start ...'
-                 dir('.'){
-                       sh "dotnet FastDostavka.dll --urls=http://localhost:5050"
+                      sh "sudo systemctl start fast"
 
                  }
             }
