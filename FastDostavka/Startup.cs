@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -133,7 +134,29 @@ namespace FastDostavka
             {
                 app.UseDeveloperExceptionPage();
             }
+            #region  InitStaticFiles Images
+            string pathRoot = InitStaticFiles
+                .CreateFolderServer(env, this.Configuration,
+                    new string[] { "ImagesPath" });
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(pathRoot),
+                RequestPath = new PathString('/' + Configuration.GetValue<string>("UrlImages"))
+            });
+            #endregion
 
+            #region  InitStaticFiles UserImages
+            string pathuser = InitStaticFiles
+                .CreateFolderServer(env, this.Configuration,
+                new string[] { "ImagesPath", "ImagesUserPath" });
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(pathuser),
+                RequestPath = new PathString('/' + Configuration.GetValue<string>("UserUrlImages"))
+
+            });
+            #endregion
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
