@@ -21,7 +21,9 @@ namespace FastDostavka.Data
         }
 
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
-       
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Store> Stores  { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +32,8 @@ namespace FastDostavka.Data
             modelBuilder.ApplyConfiguration(new DbUserConfiguration());
             modelBuilder.ApplyConfiguration(new DbUserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new DbRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new StoreConfiguration());
         }
     }
 }
