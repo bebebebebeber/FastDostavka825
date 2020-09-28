@@ -31,7 +31,8 @@ namespace FastDostavka.Data.Configurations
 
 
             builder.HasOne(x => x.Category)
-                .WithMany(x => x.Stores);
+                .WithMany(x => x.Stores)
+                .HasForeignKey(x=>x.CategoryId);
 
         }
     }

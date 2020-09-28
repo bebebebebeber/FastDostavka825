@@ -43,6 +43,7 @@ namespace FastDostavka.Controllers.GoodsControllers
                         Adress = x.Adress,
                         Description = x.Description,
                         Image = x.Image,
+                        CategoryId =x.CategoryId,
                         Name = x.Name
                     }));
                 }
@@ -54,6 +55,7 @@ namespace FastDostavka.Controllers.GoodsControllers
                         Adress = x.Adress,
                         Description = x.Description,
                         Image = x.Image,
+                        CategoryId = x.CategoryId,
                         Name = x.Name
                     }));
                 }
