@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FastDostavka.Controllers.UserControllers
 {
@@ -34,12 +35,13 @@ namespace FastDostavka.Controllers.UserControllers
         public  IActionResult Profile()
         {
             var userId = User.Claims.ToList()[0].Value;
-            var profile = _context.UserProfiles.FirstOrDefault(x => x.Id == userId);
+            var profile = _context.UserProfiles.Include(x=>x.DbUser).FirstOrDefault(x => x.Id == userId);
             return Ok(new ProfileViewModel()
             {
                 FirstName = profile.FirstName,
                 LastName = profile.LastName,
                 Age = profile.Age ?? 0 ,
+                Email = profile.DbUser.Email,
                 Ardess = profile.Address,
                 Image = profile.Image,
                 City = profile.City
