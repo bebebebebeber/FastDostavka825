@@ -65,5 +65,18 @@ namespace FastDostavka.Controllers.GoodsControllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("stores")]
+        public IActionResult GetStoresGoods ()
+        {
+            try
+            {
+                
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
