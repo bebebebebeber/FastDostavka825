@@ -44,7 +44,9 @@ namespace FastDostavka.Controllers.GoodsControllers
                         Description = x.Description,
                         Image = x.Image,
                         CategoryId =x.CategoryId,
-                        Name = x.Name
+                        Name = x.Name,
+                        Coordinate1 = x.Coordinate1,
+                        Coordinate2 = x.Coordinate2
                     }));
                 }
                 else
@@ -56,7 +58,9 @@ namespace FastDostavka.Controllers.GoodsControllers
                         Description = x.Description,
                         Image = x.Image,
                         CategoryId = x.CategoryId,
-                        Name = x.Name
+                        Name = x.Name,
+                        Coordinate1 = x.Coordinate1,
+                        Coordinate2 = x.Coordinate2
                     }));
                 }
             }
@@ -65,18 +69,6 @@ namespace FastDostavka.Controllers.GoodsControllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("stores")]
-        public IActionResult GetStoresGoods ()
-        {
-            try
-            {
-                
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
     }
 }
