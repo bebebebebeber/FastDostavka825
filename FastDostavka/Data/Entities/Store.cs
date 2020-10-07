@@ -13,6 +13,8 @@ namespace FastDostavka.Data.Entities
         public string Description { get; set; }
         public string Adress { get; set; }
         public int CategoryId { get; set; }
+        public double Coordinate1 { get; set; }
+        public double Coordinate2 { get; set; }
         public virtual Category Category{ get; set; }
 
     }

@@ -23,8 +23,7 @@ namespace FastDostavka.Data
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Store> Stores  { get; set; }
-
-
+        public virtual DbSet<Goods> Goods { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
