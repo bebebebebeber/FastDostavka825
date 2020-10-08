@@ -31,7 +31,7 @@ namespace FastDostavka.Controllers.GoodsControllers
             _jwtTokenService = jwtTokenService;
         }
         [HttpPost("stores")]
-        public IActionResult Stores(StoreViewModel model)
+        public IActionResult Stores([FromBody]StoreViewModel model)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace FastDostavka.Controllers.GoodsControllers
             }
         }
         [HttpPost("goods")]
-        public IActionResult Goods(GoodsViewModel model)
+        public IActionResult Goods([FromBody] GoodsViewModel model)
         {
             try
             {
