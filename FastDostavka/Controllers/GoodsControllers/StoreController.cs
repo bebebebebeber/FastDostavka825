@@ -74,18 +74,15 @@ namespace FastDostavka.Controllers.GoodsControllers
         {
             try
             {
-                //return Ok(_context.Goods.Where(x => x.Category.Id == 1).Select(x => new StoreModel()
-                //{
-                //    Id = x.Id,
-                //    Adress = x.Adress,
-                //    Description = x.Description,
-                //    Image = x.Image,
-                //    CategoryId = x.CategoryId,
-                //    Name = x.Name,
-                //    Coordinate1 = x.Coordinate1,
-                //    Coordinate2 = x.Coordinate2
-                //}));
-                return Ok();
+                return Ok(_context.Goods.Where(x => x.Store.Id == model.Id).Select(x => new GoodsModel()
+                {
+                    Id = x.Id,
+                    Description = x.Decription,
+                    Image = x.Image,
+                    Name = x.Name,
+                    Price = x.Price
+                }));
+
             }
             catch (Exception ex)
             {
