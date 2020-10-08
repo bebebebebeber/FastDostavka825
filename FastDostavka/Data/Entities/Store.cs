@@ -16,6 +16,6 @@ namespace FastDostavka.Data.Entities
         public double Coordinate1 { get; set; }
         public double Coordinate2 { get; set; }
         public virtual Category Category{ get; set; }
-
+        public ICollection<Goods> Goods { get; set; }
     }
 }
