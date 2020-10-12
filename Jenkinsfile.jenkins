@@ -11,29 +11,29 @@ pipeline  {
         timestamps()
     }
     stages {
-        stage("Stop service") {
+        stage("Stop docker") {
             steps {
                 echo 'Stop process ...'
                 dir('.'){
-                  sh "sudo systemctl stop fast"
+                  sh "docker-compose stop"
 
                 }
             }
         }
-		stage("publish") {
+		stage("Remove docker") {
             steps {
-                echo 'publish ..'
+                echo 'Remove process ...'
                 dir('.'){
-                  sh "dotnet publish --configuration Release"
+                  sh "docker-compose rm"
 
                 }
             }
         }
-        stage("start service") {
+		stage("Run docker") {
             steps {
-                 echo 'starting ..'
+                 echo 'Running ..'
                  dir('.'){
-                      sh "sudo systemctl start fast"
+                      sh "docker-compose up -d"
 
                  }
             }
