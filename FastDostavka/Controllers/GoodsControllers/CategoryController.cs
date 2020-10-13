@@ -33,6 +33,7 @@ namespace FastDostavka.Controllers.GoodsControllers
         [HttpGet("categories")]
         public IActionResult Categories()
         {
+            string app = "Hello test docker";
             return Ok(_context.Categories.Select(x => new CategoryModel()
             {
                 Id = x.Id,
