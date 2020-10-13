@@ -31,7 +31,7 @@ namespace FastDostavka.Controllers.GoodsControllers
             _jwtTokenService = jwtTokenService;
         }
         [HttpPost("stores")]
-        public IActionResult Stores(StoreViewModel model)
+        public IActionResult Stores([FromBody]StoreViewModel model)
         {
             try
             {
@@ -43,8 +43,10 @@ namespace FastDostavka.Controllers.GoodsControllers
                         Adress = x.Adress,
                         Description = x.Description,
                         Image = x.Image,
-                        CategoryId =x.CategoryId,
-                        Name = x.Name
+                        CategoryId = x.CategoryId,
+                        Name = x.Name,
+                        Coordinate1 = x.Coordinate1,
+                        Coordinate2 = x.Coordinate2
                     }));
                 }
                 else
@@ -56,9 +58,31 @@ namespace FastDostavka.Controllers.GoodsControllers
                         Description = x.Description,
                         Image = x.Image,
                         CategoryId = x.CategoryId,
-                        Name = x.Name
+                        Name = x.Name,
+                        Coordinate1 = x.Coordinate1,
+                        Coordinate2 = x.Coordinate2
                     }));
                 }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("goods")]
+        public IActionResult Goods([FromBody] GoodsViewModel model)
+        {
+            try
+            {
+                return Ok(_context.Goods.Where(x => x.Store.Id == model.Id).Select(x => new GoodsModel()
+                {
+                    Id = x.Id,
+                    Description = x.Decription,
+                    Image = x.Image,
+                    Name = x.Name,
+                    Price = x.Price
+                }));
+
             }
             catch (Exception ex)
             {
