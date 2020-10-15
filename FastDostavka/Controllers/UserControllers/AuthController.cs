@@ -42,7 +42,7 @@ namespace FastDostavka.Controllers.UserControllers
                 .PasswordSignInAsync(user, model.Password, false, false).Result;
             if (!res.Succeeded)
             {
-                return BadRequest("Не правильний пароль!");
+                return BadRequest("Не правильний пароль--!");
             }
             await _signInManager.SignInAsync(user, isPersistent: false);
             var refreshToken = _jwtTokenService.GenerateRefreshToken();
