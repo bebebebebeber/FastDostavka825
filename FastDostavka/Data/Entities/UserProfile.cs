@@ -20,5 +20,7 @@ namespace FastDostavka.Data.Entities
         public DateTime LastLogined { get; set; }
 
         public virtual DbUser DbUser { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+
     }
 }
