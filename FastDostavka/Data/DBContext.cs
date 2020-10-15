@@ -24,6 +24,8 @@ namespace FastDostavka.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Store> Stores  { get; set; }
         public virtual DbSet<Goods> Goods { get; set; }
+        public virtual DbSet<Order> Orders{ get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
