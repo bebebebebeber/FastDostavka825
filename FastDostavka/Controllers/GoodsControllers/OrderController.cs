@@ -31,6 +31,22 @@ namespace FastDostavka.Controllers.GoodsControllers
             _context = context;
             _jwtTokenService = jwtTokenService;
         }
+        [Authorize(Roles ="Admin")]
+        [HttpPost("change-order-status")]
+        public async Task<IActionResult> Stores(ChangeOrderStatusViewModel model)
+        {
+            try
+            {
+                var userId = User.Claims.ToList()[0].Value;
+                _context.Orders.FirstOrDefault(x => x.Id == model.Id);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost("order")]
         public async Task<IActionResult> Stores([FromBody] OrderViewModel model)
         {

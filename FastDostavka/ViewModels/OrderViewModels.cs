@@ -22,4 +22,9 @@ namespace FastDostavka.ViewModels
         public string GoodsName { get; set; }
         public string GoodsImage { get; set; }
     }
+    public class ChangeOrderStatusViewModel
+    {
+        public int Id { get; set; }
+        public int StatusId { get; set; }        
+    }
 }
