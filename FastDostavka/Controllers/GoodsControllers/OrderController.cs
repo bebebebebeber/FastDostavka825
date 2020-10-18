@@ -38,7 +38,7 @@ namespace FastDostavka.Controllers.GoodsControllers
             try
             {
                 var userId = User.Claims.ToList()[0].Value;
-                _context.Orders.FirstOrDefault(x => x.Id == model.Id);
+                _context.Orders.FirstOrDefault(x => x.Id == model.Id).OrderStatusId=model.StatusId;
                 await _context.SaveChangesAsync();
                 return Ok();
             }
