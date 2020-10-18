@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using FastDostavka.Data;
 using FastDostavka.Data.Entities;
 using FastDostavka.Data.Entities.IdentityUser;
+using FastDostavka.Hubs;
 using FastDostavka.Services;
 using FastDostavka.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace FastDostavka.Controllers.GoodsControllers
 {
@@ -23,6 +25,8 @@ namespace FastDostavka.Controllers.GoodsControllers
         private readonly SignInManager<DbUser> _signInManager;
         private readonly DBContext _context;
         private readonly IJwtTokenService _jwtTokenService;
+        private IHubContext<ChatHub> _hub;
+
         public OrderController(DBContext context, UserManager<DbUser> userManager, SignInManager<DbUser> sigInManager,
             IJwtTokenService jwtTokenService)
         {
@@ -40,6 +44,7 @@ namespace FastDostavka.Controllers.GoodsControllers
                 var userId = User.Claims.ToList()[0].Value;
                 _context.Orders.FirstOrDefault(x => x.Id == model.Id).OrderStatusId=model.StatusId;
                 await _context.SaveChangesAsync();
+                await _hub.Clients.User("").SendAsync("orderStatusChanged", model.Id);
                 return Ok();
             }
             catch (Exception ex)
