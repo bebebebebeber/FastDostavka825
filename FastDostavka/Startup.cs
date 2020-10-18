@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FastDostavka.Data;
 using FastDostavka.Data.Entities.IdentityUser;
 using FastDostavka.Data.Seed;
+using FastDostavka.Hubs;
 using FastDostavka.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -47,7 +48,10 @@ namespace FastDostavka
                      .AddEntityFrameworkStores<DBContext>()
                      .AddDefaultTokenProviders();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
-
+            services.AddSignalR(o =>
+            {
+                o.MaximumReceiveMessageSize = 5242880; // bytes
+            });
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("SecretPhrase")));
 
             services.Configure<IdentityOptions>(options =>
@@ -164,6 +168,8 @@ namespace FastDostavka
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/hubs/chat");
+
             });
             SeedData.Seed(app.ApplicationServices, env, this.Configuration);
 

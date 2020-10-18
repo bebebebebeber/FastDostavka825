@@ -14,6 +14,10 @@ namespace FastDostavka.Data.Entities
         public string Addres { get; set; }
         public int House { get; set; }
         public int Flat { get; set; }
+        public DateTime OrderDate { get; set; }
+        [ForeignKey("OrderStatus")]
+        public int OrderStatusId { get; set; }
+        public OrderStatus OrderStatus{ get; set; }
         [ForeignKey("Goods")]
         public int GoodsId { get; set; }
         public Goods Goods { get; set; }
