@@ -44,10 +44,32 @@ namespace FastDostavka.Controllers.GoodsControllers
                     House = model.House,
                     GoodsId = model.GoodsId,
                     UserId = userId,
+                    OrderDate = DateTime.Now
                 };
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("orders")]
+        public IActionResult Orders()
+        {
+            try
+            {
+                var userId = User.Claims.ToList()[0].Value;                
+                return Ok(_context.Orders.Where(x => x.UserId == userId).OrderByDescending(x=>x.OrderDate).Select(x => new OrderModel()
+                {
+                    Id = x.Id,
+                    Adress = x.Addres,
+                    Flat = x.Flat,
+                    House = x.House,
+                    GoodsName = x.Goods.Name,
+                    GoodsImage = x.Goods.Image
+                }));
             }
             catch (Exception ex)
             {

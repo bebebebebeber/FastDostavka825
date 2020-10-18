@@ -13,4 +13,13 @@ namespace FastDostavka.ViewModels
         public int GoodsId { get; set; }
 
     }
+    public class OrderModel
+    {
+        public int Id { get; set; }
+        public string Adress { get; set; }
+        public int House { get; set; }
+        public int Flat { get; set; }
+        public string GoodsName { get; set; }
+        public string GoodsImage { get; set; }
+    }
 }
