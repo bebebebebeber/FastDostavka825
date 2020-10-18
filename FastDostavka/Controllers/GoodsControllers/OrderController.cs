@@ -42,9 +42,10 @@ namespace FastDostavka.Controllers.GoodsControllers
             try
             {
                 var userId = User.Claims.ToList()[0].Value;
-                _context.Orders.FirstOrDefault(x => x.Id == model.Id).OrderStatusId=model.StatusId;
+                var o = _context.Orders.FirstOrDefault(x => x.Id == model.Id);
+                o.OrderStatusId=model.StatusId;
                 await _context.SaveChangesAsync();
-                await _hub.Clients.User("").SendAsync("orderStatusChanged", model.Id);
+                await _hub.Clients.User(o.UserId).SendAsync("orderStatusChanged", model.Id);
                 return Ok();
             }
             catch (Exception ex)
