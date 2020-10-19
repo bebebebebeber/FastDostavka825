@@ -25,19 +25,20 @@ namespace FastDostavka.Controllers.GoodsControllers
         private readonly SignInManager<DbUser> _signInManager;
         private readonly DBContext _context;
         private readonly IJwtTokenService _jwtTokenService;
-        private IHubContext<ChatHub> _hub;
+        private readonly IHubContext<ChatHub> _hub;
 
         public OrderController(DBContext context, UserManager<DbUser> userManager, SignInManager<DbUser> sigInManager,
-            IJwtTokenService jwtTokenService)
+            IJwtTokenService jwtTokenService, IHubContext<ChatHub> hub)
         {
             _userManager = userManager;
             _signInManager = sigInManager;
             _context = context;
             _jwtTokenService = jwtTokenService;
+            _hub = hub;
         }
         [Authorize(Roles ="Admin")]
         [HttpPost("change-order-status")]
-        public async Task<IActionResult> Stores(ChangeOrderStatusViewModel model)
+        public async Task<IActionResult> Stores([FromBody]ChangeOrderStatusViewModel model)
         {
             try
             {
@@ -66,7 +67,8 @@ namespace FastDostavka.Controllers.GoodsControllers
                     House = model.House,
                     GoodsId = model.GoodsId,
                     UserId = userId,
-                    OrderDate = DateTime.Now
+                    OrderDate = DateTime.Now,
+                    OrderStatusId=1
                 };
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
@@ -89,9 +91,32 @@ namespace FastDostavka.Controllers.GoodsControllers
                     Adress = x.Addres,
                     Flat = x.Flat,
                     House = x.House,
+                    Status = x.OrderStatus.Name,
                     GoodsName = x.Goods.Name,
                     GoodsImage = x.Goods.Image
                 }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("last-order")]
+        public IActionResult LastOrder()
+        {
+            try
+            {
+                var userId = User.Claims.ToList()[0].Value;
+                return Ok(_context.Orders.Where(x => x.UserId == userId).OrderByDescending(x => x.OrderDate).Select(x => new OrderModel()
+                {
+                    Id = x.Id,
+                    Adress = x.Addres,
+                    Flat = x.Flat,
+                    Status = x.OrderStatus.Name,
+                    House = x.House,
+                    GoodsName = x.Goods.Name,
+                    GoodsImage = x.Goods.Image
+                }).First());
             }
             catch (Exception ex)
             {
