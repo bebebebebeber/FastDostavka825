@@ -46,7 +46,7 @@ namespace FastDostavka.Controllers.GoodsControllers
                 var o = _context.Orders.FirstOrDefault(x => x.Id == model.Id);
                 o.OrderStatusId=model.StatusId;
                 await _context.SaveChangesAsync();
-                await _hub.Clients.All.SendAsync("orderStatusChanged", model.Id);
+                await _hub.Clients.User(o.UserId).SendAsync("orderStatusChanged", model.Id);
                 return Ok();
             }
             catch (Exception ex)
@@ -72,6 +72,8 @@ namespace FastDostavka.Controllers.GoodsControllers
                 };
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
+                await _hub.Clients.User(userId).SendAsync("orderStatusChanged", o.Id);
+
                 return Ok();
             }
             catch (Exception ex)

@@ -10,12 +10,14 @@ using FastDostavka.Data.Entities.IdentityUser;
 using FastDostavka.Data.Seed;
 using FastDostavka.Hubs;
 using FastDostavka.Services;
+using JobJoin.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,6 +50,8 @@ namespace FastDostavka
                      .AddEntityFrameworkStores<DBContext>()
                      .AddDefaultTokenProviders();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
+            services.AddSingleton<IUserIdProvider, CustomProvider>();
+
             services.AddSignalR(o =>
             {
                 o.MaximumReceiveMessageSize = 5242880; // bytes
