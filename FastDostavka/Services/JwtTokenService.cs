@@ -62,7 +62,7 @@ namespace FastDostavka.Services
 
             var jwt = new JwtSecurityToken(
                 signingCredentials: signinCredentials,
-                expires: DateTime.Now.AddMinutes(3),
+                expires: DateTime.Now.AddDays(1),
                 claims: claims
                 );
             return new JwtSecurityTokenHandler().WriteToken(jwt);
@@ -90,7 +90,7 @@ namespace FastDostavka.Services
 
             var jwt = new JwtSecurityToken(
                 signingCredentials: signinCredentials,
-                expires: DateTime.Now.AddMinutes(3),
+                expires: DateTime.Now.AddDays(1),
                 claims: c
                 );
             return new JwtSecurityTokenHandler().WriteToken(jwt);
