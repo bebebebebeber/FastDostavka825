@@ -95,7 +95,8 @@ namespace FastDostavka.Controllers.GoodsControllers
                     House = x.House,
                     Status = x.OrderStatus.Name,
                     GoodsName = x.Goods.Name,
-                    GoodsImage = x.Goods.Image
+                    GoodsImage = x.Goods.Image,
+                    OrderDate = x.OrderDate
                 }));
             }
             catch (Exception ex)
@@ -118,6 +119,30 @@ namespace FastDostavka.Controllers.GoodsControllers
                     House = x.House,
                     GoodsName = x.Goods.Name,
                     GoodsImage = x.Goods.Image
+                }).First());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("order/{id}")]
+        public IActionResult GetOrder(int id)
+        {
+            try
+            {
+                var userId = User.Claims.ToList()[0].Value;
+                return Ok(_context.Orders.Where(x => x.UserId == userId&& x.Id == id).Select(x => new OrderModel()
+                {
+                    Id = x.Id,
+                    Adress = x.Addres,
+                    Flat = x.Flat,
+                    Status = x.OrderStatus.Name,
+                    House = x.House,
+                    GoodsName = x.Goods.Name,
+                    GoodsImage = x.Goods.Image,
+                    OrderDate = x.OrderDate,
+                    StatusId = x.OrderStatusId
                 }).First());
             }
             catch (Exception ex)

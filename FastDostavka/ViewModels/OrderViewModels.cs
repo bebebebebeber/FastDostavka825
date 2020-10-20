@@ -20,6 +20,7 @@ namespace FastDostavka.ViewModels
         public int House { get; set; }
         public int Flat { get; set; }
         public string Status { get; set; }
+        public DateTime OrderDate { get; set; }
         public int StatusId { get; set; }
         public string StoreName { get; set; }
         public string GoodsName { get; set; }
