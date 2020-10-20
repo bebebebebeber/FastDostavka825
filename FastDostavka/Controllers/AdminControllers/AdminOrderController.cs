@@ -46,7 +46,7 @@ namespace FastDostavka.Controllers.AdminControllers
                     Adress = x.Addres,
                     Flat = x.Flat,
                     House = x.House,
-                    Status = x.OrderStatus.Name,
+                    StatusId = x.OrderStatusId,
                     GoodsName = x.Goods.Name,
                     GoodsImage = x.Goods.Image,
                     StoreName = x.Goods.Store.Name
@@ -61,10 +61,25 @@ namespace FastDostavka.Controllers.AdminControllers
                 page -= 1;
                 var res = orders.Skip(page * 10).Take(10).ToList();
                 return Ok(new AdminOrdersViewModel()
-                { 
+                {
+                    Statuses = _context.OrderStatuses.ToList(),
                     Orders = res,
                     Pages = count
-                });
+                }) ;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _context.Orders.Remove(_context.Orders.FirstOrDefault(x => x.Id == id));
+                _context.SaveChanges();
+                return Ok();
             }
             catch (Exception ex)
             {
