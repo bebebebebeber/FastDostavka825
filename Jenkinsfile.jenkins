@@ -24,7 +24,7 @@ pipeline  {
             steps {
                 echo 'Remove process ...'
                 dir('.'){
-                  sh "docker image rm $(docker images -f 'dangling=true' -q)"
+                  sh "docker images -f 'dangling=true' -q"
 
                 }
             }
