@@ -20,4 +20,9 @@ namespace FastDostavka.ViewModels
         public double Price { get; set; }
         public int StoreId { get; set; }
     }
+    public class AdminGetStoresViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
 }
