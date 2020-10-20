@@ -48,7 +48,8 @@ namespace FastDostavka.Controllers.AdminControllers
                     House = x.House,
                     Status = x.OrderStatus.Name,
                     GoodsName = x.Goods.Name,
-                    GoodsImage = x.Goods.Image
+                    GoodsImage = x.Goods.Image,
+                    StoreName = x.Goods.Store.Name
                 });
                 double t = orders.Count();
                 double c = t / 10;                
