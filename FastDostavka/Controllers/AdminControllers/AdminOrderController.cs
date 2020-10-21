@@ -86,5 +86,28 @@ namespace FastDostavka.Controllers.AdminControllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("stores")]
+        public IActionResult GetStores()
+        {
+            try
+            {
+                var res = _context.Stores.Select(t => new AdminGetStoresViewModel
+                {
+                    Id = t.Id,
+                    Name = t.Name + ", " + t.Adress,
+                    Image = t.Image
+                });
+                return Ok(new StoresList()
+                {
+                    Stores = res.ToList(),
+                    Categories = _context.Categories.ToList()
+                });
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
