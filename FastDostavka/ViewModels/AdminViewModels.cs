@@ -26,6 +26,13 @@ namespace FastDostavka.ViewModels
         public string Name { get; set; }
         public string Image { get; set; }
     }
+
+    public class StoresList
+    {
+        public List<Category> Categories { get; set; }
+        public List<AdminGetStoresViewModel> Stores { get; set; }
+
+    }
     public class CreateStoreViewModel
     {
         public string Name { get; set; }

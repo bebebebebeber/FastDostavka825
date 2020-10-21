@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -44,7 +45,13 @@ namespace FastDostavka
             services.AddCors();
             services.AddDbContext<DBContext>(options =>
               options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.Configure<FormOptions>(options =>
+            {
+                // Set the limit to 256 MB
+                options.ValueCountLimit = 1024;
+                options.KeyLengthLimit = 1024 * 2;
+                options.ValueLengthLimit = 1024 * 1024 * 100;
+            });
             services.AddIdentity<DbUser, DbRole>(options => options.Stores
             .MaxLengthForKeys = 128)
                      .AddEntityFrameworkStores<DBContext>()
