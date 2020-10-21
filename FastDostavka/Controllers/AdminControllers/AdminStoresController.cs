@@ -50,7 +50,7 @@ namespace FastDostavka.Controllers.AdminControllers
                         .CreateImageByFileName(_env, _configuration,
                         new string[] { "ImagesPath", "ImagesUserPath" },
                         imageName, model.Image);
-                    img = imageName;
+                    img = "500_"+imageName;
                 }
                 Store s = new Store() 
                 {
