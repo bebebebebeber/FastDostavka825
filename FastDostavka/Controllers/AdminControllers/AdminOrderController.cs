@@ -94,7 +94,7 @@ namespace FastDostavka.Controllers.AdminControllers
                 var res = _context.Stores.Select(t => new AdminGetStoresViewModel
                 {
                     Id = t.Id,
-                    Name = t.Name + ", " + t.Adress,
+                    Name = t.Name ,
                     Image = t.Image
                 });
                 return Ok(new StoresList()
