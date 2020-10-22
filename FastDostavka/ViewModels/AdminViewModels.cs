@@ -42,4 +42,9 @@ namespace FastDostavka.ViewModels
         public double Coordinate2 { get; set; }
         public int CategoryId { get; set; }
     }
+    public class AdminProductsViewModel
+    {
+        public List<ProductViewModel> Products { get; set; }
+        public int Pages { get; set; }
+    }
 }

@@ -37,7 +37,54 @@ namespace FastDostavka.Controllers.AdminControllers
             _context = context;
             _jwtTokenService = jwtTokenService;
         }
-
+        [HttpGet("get-products/{page}")]
+        public IActionResult GetProducts(int page)
+        {
+            try
+            {
+                var products = _context.Goods.Select(x => new ProductViewModel()
+                {
+                    Id = x.Id,
+                    Name=x.Name,
+                    Price=x.Price,
+                    Decription=x.Decription,
+                    Image=x.Image,
+                    StoreName = x.Store.Name
+                });
+                double t = products.Count();
+                double c = t / 10;
+                int count = int.Parse(Math.Ceiling(c).ToString());
+                if (count < page)
+                {
+                    page = 1;
+                }
+                page -= 1;
+                var res = products.Skip(page * 10).Take(10).ToList();
+                return Ok(new AdminProductsViewModel()
+                {
+                    Products = res,
+                    Pages = count
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _context.Goods.Remove(_context.Goods.FirstOrDefault(x => x.Id == id));
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProductAsync([FromBody] AdminAddProductViewModel model)
         {
