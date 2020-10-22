@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using FastDostavka.Data.Entities;
 using FastDostavka.ViewModels;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace FastDostavka.Controllers.AdminControllers
 {
@@ -23,10 +25,13 @@ namespace FastDostavka.Controllers.AdminControllers
         private readonly SignInManager<DbUser> _signInManager;
         private readonly DBContext _context;
         private readonly IJwtTokenService _jwtTokenService;
-
-        public AdminProductController(DBContext context, UserManager<DbUser> userManager, SignInManager<DbUser> sigInManager,
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
+        public AdminProductController(IWebHostEnvironment env, IConfiguration configuration, DBContext context, UserManager<DbUser> userManager, SignInManager<DbUser> sigInManager,
             IJwtTokenService jwtTokenService)
         {
+            _env = env;
+            _configuration = configuration;
             _userManager = userManager;
             _signInManager = sigInManager;
             _context = context;
@@ -38,11 +43,21 @@ namespace FastDostavka.Controllers.AdminControllers
         {
             try
             {
+                string img = null;
+                if (!string.IsNullOrEmpty(model.Image))
+                {
+                    string imageName = Guid.NewGuid().ToString() + ".jpg";
+                    string pathSaveImages = InitStaticFiles
+                        .CreateImageByFileName(_env, _configuration,
+                        new string[] { "ImagesPath", "ImagesUserPath" },
+                        imageName, model.Image);
+                    img = "500_" + imageName;
+                }
                 await _context.Goods.AddAsync(new Goods
                 {
                     Name = model.Name,
-                    Image = model.Image,
-                    Decription = model.Decription,
+                    Image = img,
+                    Decription = model.Description,
                     StoreId = model.StoreId,
                     Price = model.Price
                 });
